@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find human_moveit_config)/config/ros_controllersr.yaml" command="load"/>
+
+  <!-- Load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" ns="/human_robotr" respawn="false"
+    output="screen" args="--namespace=/human_robotr/humanr
+              right_arm_controller
+              --timeout 20"/>
+</launch>

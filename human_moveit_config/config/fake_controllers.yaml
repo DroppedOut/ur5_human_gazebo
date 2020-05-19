@@ -1,0 +1,25 @@
+controller_list:
+  - name: fake_left_arm_controller
+    joints:
+      - jLeftShoulder_rotx
+      - jLeftShoulder_roty
+      - jLeftShoulder_rotz
+      - jLeftElbow_roty
+      - jLeftElbow_rotz
+      - jLeftWrist_rotx
+      - jLeftWrist_rotz
+  - name: fake_right_arm_controller
+    joints:
+      - jRightShoulder_rotx
+      - jRightShoulder_roty
+      - jRightShoulder_rotz
+      - jRightElbow_roty
+      - jRightElbow_rotz
+      - jRightWrist_rotx
+      - jRightWrist_rotz
+  - name: fake_left_hand_controller
+    joints:
+      - jLeftWrist_rotz
+  - name: fake_right_hand_controller
+    joints:
+      - jRightWrist_rotz

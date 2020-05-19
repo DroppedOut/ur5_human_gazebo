@@ -1,0 +1,46 @@
+humanr:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100  
+  right_arm_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - jRightShoulder_rotx
+      - jRightShoulder_roty
+      - jRightShoulder_rotz
+      - jRightElbow_roty
+      - jRightElbow_rotz
+      - jRightWrist_rotx
+      - jRightWrist_rotz
+    gains:
+      jRightShoulder_rotx: { p: 100, d: 1, i: 1, i_clamp: 1}
+      jRightShoulder_roty: { p: 100, d: 1, i: 1, i_clamp: 1}
+      jRightShoulder_rotz: { p: 100, d: 1, i: 1, i_clamp: 1}
+      jRightElbow_roty: { p: 100, d: 1, i: 1, i_clamp: 1}
+      jRightElbow_rotz: { p: 100, d: 1, i: 1, i_clamp: 1}
+      jRightWrist_rotx: { p: 100, d: 1, i: 1, i_clamp: 1}
+    constraints:
+        goal_time: 7.0
+        stopped_velocity_tolerance: 0.05
+        jRightShoulder_rotx: {trajectory: 0.2}
+        jRightShoulder_roty: {trajectory: 0.2}
+        jRightShoulder_rotz: {trajectory: 0.2}
+        jRightElbow_roty: {trajectory: 0.2}
+        jRightElbow_rotz: {trajectory: 0.2}
+        jRightWrist_rotx: {trajectory: 0.2}
+    stop_trajectory_duration: 0.5
+    state_publish_rate:  50
+    action_monitor_rate: 10
+controller_list:
+  - name: humanr/right_arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - jRightShoulder_rotx
+      - jRightShoulder_roty
+      - jRightShoulder_rotz
+      - jRightElbow_roty
+      - jRightElbow_rotz
+      - jRightWrist_rotx
+      - jRightWrist_rotz

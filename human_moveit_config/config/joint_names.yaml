@@ -1,0 +1,17 @@
+controller_joint_names: 
+  - jLeftC7Shoulder_rotx
+  - jLeftShoulder_rotx
+  - jLeftShoulder_roty
+  - jLeftShoulder_rotz
+  - jLeftElbow_roty
+  - jLeftElbow_rotz
+  - jLeftWrist_rotx
+  - jLeftWrist_rotz
+  - jRightC7Shoulder_rotx
+  - jRightShoulder_rotx
+  - jRightShoulder_roty
+  - jRightShoulder_rotz
+  - jRightElbow_roty
+  - jRightElbow_rotz
+  - jRightWrist_rotx
+  - jRightWrist_rotz
