@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+
+<group ns="human_robotl">
+
+  <node pkg="ur5_notebook" type="human_left.py" name="human_mp_left" output="screen">
+  </node>
+<node pkg="ur5_notebook" type="gripper_left.py" name="human_g_left" output="screen">
+  </node>
+<!--<node pkg="ur5_notebook" type="draw_trajectory.py" name="left_traj_painter" output="screen">
+  </node>-->
+</group>
+
+
+<group ns="human_robotr">
+
+  <node pkg="ur5_notebook" type="human_right.py" name="human_mp_right" output="screen">
+  </node>
+<node pkg="ur5_notebook" type="gripper_right.py" name="human_g_right" output="screen">
+  </node>
+</group>
+<!--<node pkg="ur5_notebook" type="timer.py" name="timer" output="screen">
+  </node>-->
+</launch>

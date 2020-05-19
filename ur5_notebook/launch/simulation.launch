@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="spheres_white_spawner/box_path" type="str" value="$(find ur5_notebook)/urdf/sphere.urdf"/>
+  <param name="blocks_white_spawner/box_path" type="str" value="$(find ur5_notebook)/urdf/box.urdf"/>
+  <param name="spheres_green_spawner/box_path" type="str" value="$(find ur5_notebook)/urdf/sphere_green.urdf"/>
+  <param name="blocks_green_spawner/box_path" type="str" value="$(find ur5_notebook)/urdf/box_green.urdf"/>
+  <param name="blocks_white_spawner/rand" type="int" value="1"/>
+  <param name="spheres_white_spawner/rand" type="int" value="20"/>
+  <param name="blocks_green_spawner/rand" type="int" value="13"/>
+  <param name="spheres_green_spawner/rand" type="int" value="36"/>
+
+  <arg name="paused" default="false"/>
+  <arg name="gui" default="true"/>
+  <arg name="debug" default="false" />
+  <arg name="sim" default="true" />
+  <arg name="add_human" default="true"/>
+
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="worlds/empty.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+ <!-- spwan ur5 -->
+  <include file="$(find ur_description)/launch/ur5_upload.launch">
+    <arg name="add_human" value="$(arg add_human)"/>
+  </include>
+
+
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -z 1.00 -y 0.7" respawn="false" output="screen" />
+  <include file="$(find ur_gazebo)/launch/controller_utils.launch"/>
+
+  <rosparam file="$(find ur_gazebo)/controller/arm_controller_ur5.yaml" command="load"/>
+  <node name="arm_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn arm_controller" respawn="false" output="screen"/>
+
+
+  <remap if="$(arg sim)" from="/follow_joint_trajectory" to="/arm_controller/follow_joint_trajectory"/>
+
+
+  <include file="$(find ur5_moveit_config)/launch/move_group.launch">
+    <arg name="limited" default="true"/>
+    <arg name="debug" default="$(arg debug)" />
+  </include>
+<!-- spawn human -->
+<group if="$(arg add_human)">
+<group ns="human_robotl">
+<!--<rosparam command="load" file="$(find human_moveit_config)/config/joint_names.yaml"/>-->
+  <include file="$(find human_moveit_config)/launch/ros_controllersl.launch"/>
+
+  <include file="$(find human_moveit_config)/launch/planning_contextl.launch" >
+    <arg name="load_robot_description" value="false" />
+  </include>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="false"/>
+    <rosparam param="source_list">[/joint_states]</rosparam>
+  </node>
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+  <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+  <include file="$(find human_moveit_config)/launch/move_groupl.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+<arg name="planner" value="ompl" />
+  </include> 
+<!--
+  <include file="$(find human_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="rviz_config" value="$(find human_moveit_config)/launch/moveit.rviz"/>
+    <arg name="debug" value="false"/>
+  </include>
+-->
+ </group>
+
+<group ns="human_robotr">
+<!--<rosparam command="load" file="$(find human_moveit_config)/config/joint_names.yaml"/>-->
+  <include file="$(find human_moveit_config)/launch/ros_controllersr.launch"/>
+
+  <include file="$(find human_moveit_config)/launch/planning_contextr.launch" >
+    <arg name="load_robot_description" value="false" />
+  </include>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="false"/>
+    <rosparam param="source_list">[/joint_states]</rosparam>
+  </node>
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+  <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+  <include file="$(find human_moveit_config)/launch/move_groupr.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+<arg name="planner" value="ompl" />
+  </include> 
+ </group>
+</group>
+
+<!--
+<node name="joint_state_merger" pkg="joint_state_publisher" type="joint_state_publisher">
+
+		<rosparam command="load" file="$(find human_moveit_config)/config/source_list.yaml"/>
+
+	</node>
+-->
+
+<group if="$(arg add_human)">
+<!-- spawn table -->
+  <node name="spawn_table" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur5_notebook)/urdf/table_small.sdf -sdf -model table -y 0.1 -x -0.0 -z 0.0" />
+  <!-- spawn the bin -->
+  <node name="bin1" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur5_notebook)/urdf/binBlue.urdf -urdf -model bin1 -y 0.1 -x -0.6 -z 0.85 -P -0.08"/>
+ <node name="bin2" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur5_notebook)/urdf/binRed.urdf -urdf -model bin2 -y 0.1 -x 0.6 -z 0.85 -P 0.08" />
+</group>
+
+  <!-- the blocks spawner nodes -->
+  <node name="spheres_white_spawner" pkg="ur5_notebook" type="spawner" output="screen" />
+  <node name="blocks_white_spawner" pkg="ur5_notebook" type="spawner" output="screen" />
+  <node name="spheres_green_spawner" pkg="ur5_notebook" type="spawner" output="screen" />
+  <node name="blocks_green_spawner" pkg="ur5_notebook" type="spawner" output="screen" />
+  <node pkg="ur5_notebook" type="respawn.py" name="respawn_blocks"/>
+  <!-- movement, vision, gripper -->
+  <!--<node name="ur5_vision" pkg="ur5_notebook" type="ur5_vision.py" output="screen" />-->
+  <!--<node name="ur5_mp" pkg="ur5_notebook" type="ur5_mp.py" output="screen" />-->
+  <node name="ur5_gripper" pkg="ur5_notebook" type="ur5_gripper.py" output="screen"/>
+</launch>

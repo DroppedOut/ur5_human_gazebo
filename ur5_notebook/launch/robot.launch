@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node pkg="ur5_notebook" type="ur5_vision.py" name="robot_cam" output="screen">
+  </node>
+<node pkg="ur5_notebook" type="ur5_mp.py" name="robot_movement" output="screen">
+  </node>
+
+</launch>
