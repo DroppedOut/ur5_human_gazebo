@@ -25,7 +25,7 @@ Quick start
 
 10) cd src/ur5_human_gazebo/ur5_notebook chmod +x *.py
 
-11) To launch simulation enter "roslaunch ur5_notebook simulation.launch"
+11) To launch simulation enter "roslaunch ur5_notebook && simulation.launch"
 
 12) To launch robot enter "roslaunch ur5_notebook robot.launch"
 
