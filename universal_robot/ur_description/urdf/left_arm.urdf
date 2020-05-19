@@ -1,0 +1,90 @@
+<robot name="XSensStyleModel_template" xmlns:xacro="http://ros.org/wiki/xacro">  
+    <transmission name="trans_jLeftC7Shoulder_rotx">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="jLeftC7Shoulder_rotx">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="jLeftC7Shoulder_rotx_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_jLeftShoulder_rotx">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="jLeftShoulder_rotx">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="jLeftShoulder_rotx_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_jLeftShoulder_roty">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="jLeftShoulder_roty">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="jLeftShoulder_roty_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_jLeftShoulder_rotz">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="jLeftShoulder_rotz">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="jLeftShoulder_rotz_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_jLeftElbow_roty">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="jLeftElbow_roty">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="jLeftElbow_roty_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_jLeftElbow_rotz">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="jLeftElbow_rotz">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="jLeftElbow_rotz_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_jLeftWrist_rotx">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="jLeftWrist_rotx">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="jLeftWrist_rotx_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_jLeftWrist_rotz">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="jLeftWrist_rotz">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="jLeftWrist_rotz_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <gazebo>
+        <plugin name="gazebo_ros_control_left" filename="libgazebo_ros_control.so">
+            <robotNamespace>/human_robotl/humanl</robotNamespace>
+        </plugin>
+    </gazebo>
+
+
+</robot>
