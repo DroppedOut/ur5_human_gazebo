@@ -13,7 +13,7 @@ Quick start
 
 4) cd ..
 
-5) rosdep install --from-paths src --ignore-src --rosdistro melodic
+5) rosdep install -r --from-paths src --ignore-src --rosdistro melodic
 
 6) mkdir devel/include/ur5_notebook
 
